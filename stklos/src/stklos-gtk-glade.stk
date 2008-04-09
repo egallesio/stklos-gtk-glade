@@ -1,0 +1,68 @@
+;;;;
+;;;; stklos-gtk-glade.stk	-- STklos libglade wrapper
+;;;; 
+;;;; Copyright © 2007-2008 Erick Gallesio - I3S-CNRS/ESSI <eg@essi.fr>
+;;;; 
+;;;; 
+;;;; This program is free software; you can redistribute it and/or modify
+;;;; it under the terms of the GNU General Public License as published by
+;;;; the Free Software Foundation; either version 2 of the License, or
+;;;; (at your option) any later version.
+;;;; 
+;;;; This program is distributed in the hope that it will be useful,
+;;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;;; GNU General Public License for more details.
+;;;; 
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with this program; if not, write to the Free Software
+;;;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+;;;; USA.
+;;;; 
+;;;;           Author: Erick Gallesio [eg@essi.fr]
+;;;;    Creation date:  5-Aug-2007 11:11 (eg)
+;;;; Last file update:  8-Apr-2008 23:02 (eg)
+;;;;
+
+(define-module stklos-gtk-glade
+  (export glade-xml-new
+	  glade-xml-get-widget
+	  glade-xml-signal-autoconnect)
+
+  (define *libglade* "libglade-2.0.so")
+  
+  (define-external glade-xml-new  ((fname :string) (root :string) (domain :string))
+    :return-type :pointer
+    :entry-name "glade_xml_new"
+    :library-name *libglade*)
+
+  
+  (define-external glade-xml-get-widget  ((self :pointer) (name :string))
+    :return-type :pointer
+    :entry-name  "glade_xml_get_widget"
+    :library-name *libglade*)
+
+  
+  (define (%glade-connect handler obj signal-name signal-data after module)
+    ;; This function is called for each component with an associated action
+    ;; when libglade do the signal auto-connection
+
+    ;;     (eprintf "**--- Glade connect handler = ~S obj = ~S \n" handler obj)
+    ;;     (eprintf "**---   signal-name ~S signal-data ~S after = ~S\n"
+    ;; 	     signal-name signal-data after)
+    ;;     (eprintf "**--- Module = ~S\n" module)
+ 
+    (let ((hdlr    (symbol-value* handler module #f))
+	  (connect (if after g-signal-connect g-signal-connect-after)))
+      (cond
+	((not hdlr)
+	   (error "handler with name '~S' not defined in module ~S" handler module))
+	((not (procedure? hdlr))
+	   (error "handler with name '~S' is not a procedure (it was ~S)"
+		  handler hdlr))
+	(else
+	 (connect obj signal-name hdlr signal-data)))))
+)
+  
+
+(provide "stklos-gtk-glade")

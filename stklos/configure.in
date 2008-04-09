@@ -1,0 +1,66 @@
+#
+# configure.in for STklos libglade wrapper
+# 
+# Copyright © 2005-2008 Erick Gallesio - I3S-CNRS/ESSI <eg@essi.fr>
+# 
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+# USA.
+# 
+#           Author: Erick Gallesio [eg@essi.fr]
+#    Creation date: 18-Mar-2005 14:51 (eg)
+# Last file update:  9-Apr-2008 09:57 (eg)
+#
+
+
+AC_INIT(src/stklos-gtk-glade.c)
+AC_PREREQ(2.52)
+VERSION=0.1.0
+PACKAGE=stklos-gtk-glade
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_RANLIB
+
+dnl Checks for header files.
+AC_HEADER_STDC
+# AC_CHECK_HEADERS()
+
+
+dnl Substitutions
+COMP=`stklos-config --compile`
+LOAD=`stklos-config --link`
+SO=`stklos-config --shared-suffix`
+DIST=$PACKAGE-$VERSION
+
+# Compute HG_URL 
+HG_URL=$HG_REPOSITORY
+if test "$HG_REPOSITORY" = "" ;then
+   HG_URL="NOT_AVAILABLE"
+fi
+
+
+AC_SUBST(PACKAGE)
+AC_SUBST(VERSION)
+AC_SUBST(DIST)
+AC_SUBST(COMP)
+AC_SUBST(SO)
+AC_SUBST(LOAD)
+AC_SUBST(LIBS)
+AC_SUBST(LDFLAGS)
+AC_SUBST(CFLAGS)
+AC_SUBST(HG_URL)
+
+AC_OUTPUT(Makefile src/Makefile)

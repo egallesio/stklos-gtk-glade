@@ -1,0 +1,15 @@
+;;; Test for ScmPkg package stklos-gtk-glade
+;;;
+;;;           Author: Erick Gallesio [eg@essi.fr]
+;;;    Creation date: 05-Aug-2007 23:50 (eg)
+;;; Last file update:  9-Apr-2008 10:22 (eg)
+;;;
+
+(interface stklos-gtk-glade-test
+  (language stklos)
+  (import stklos-gtk-base
+	  stklos-gtk-glade
+	  recette)
+  
+  (export (run args)))
+

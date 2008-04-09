@@ -1,0 +1,67 @@
+;;;;
+;;;; interface.stk	-- GUI demo built upon a GLADE interface file 
+;;;; 
+;;;; Copyright © 2008 Erick Gallesio - Polytech'Nice-Sophia <eg@unice.fr>
+;;;; 
+;;;; 
+;;;; This program is free software; you can redistribute it and/or modify
+;;;; it under the terms of the GNU General Public License as published by
+;;;; the Free Software Foundation; either version 2 of the License, or
+;;;; (at your option) any later version.
+;;;; 
+;;;; This program is distributed in the hope that it will be useful,
+;;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;;; GNU General Public License for more details.
+;;;; 
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with this program; if not, write to the Free Software
+;;;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+;;;; USA.
+;;;; 
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date:  8-Apr-2008 19:07 (eg)
+;;;; Last file update:  8-Apr-2008 23:03 (eg)
+;;;;
+
+(require "stklos-gtk-glade")
+(import stklos-gtk-base
+	stklos-gtk-glade)
+
+;; ======================================================================
+;; 	Callbacks ...
+;; ======================================================================
+
+;; Dialog close
+(define (dialog-destroy-cb widget data)
+  (eprintf "Destroying dialog\n")
+  (gtk-main-quit))
+
+;; Button OK 
+(define (ok-clicked-cb widget data)
+  (eprintf "You have clicked the OK button\n")
+  (gtk-main-quit))
+
+;; Button Cancel
+(define (cancel-clicked-cb widget data)
+  (eprintf "You have clicked the Cancel button\n"))
+
+
+;; ======================================================================
+;; 	Glade GUI ...
+;; ======================================================================
+(define (gtk-gui)
+  (gtk-init (void) (void))
+  (let* ((xml    (glade-xml-new "./interface.glade" (void) (void)))
+	 (widget (glade-xml-get-widget xml "dialog1")))
+    (gtk-widget-show-all widget)
+    (glade-xml-signal-autoconnect xml)
+    (gtk-main)))
+
+;; ======================================================================
+(define (main args)
+  (gtk-gui)
+  (eprintf "GTk+ GUI is destroyed.\nBye\n")
+  (exit 0))
+
+

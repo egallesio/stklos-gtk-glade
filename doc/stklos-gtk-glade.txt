@@ -1,0 +1,46 @@
+Documentation for stklos-gtk-glade
+==================================
+
+
+Description
+-----------
+
+
+Package API
+-----------
+glade-xml-new
+~~~~~~~~~~~~~
+
+---------------------------------------------------------
+(glade-xml-new fname root domain)
+---------------------------------------------------------
+
+*Parameters*::
+- *fname*: todo
+
+- *root*: todo
+
+- *domain*: todo
+
+glade-xml-get-widget
+~~~~~~~~~~~~~~~~~~~~
+
+---------------------------------------------------------
+(glade-xml-get-widget self name)
+---------------------------------------------------------
+
+*Parameters*::
+- *self*: todo
+
+- *name*: todo
+
+glade-xml-signal-autoconnect
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+---------------------------------------------------------
+(glade-xml-signal-autoconnect self)
+---------------------------------------------------------
+
+*Parameters*::
+- *self*: todo
+

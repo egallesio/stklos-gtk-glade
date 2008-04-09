@@ -1,0 +1,78 @@
+#
+# Makefile.in	-- Makefile for STKLOS-GTK-GLADE extension
+# 
+# Copyright © 2005-2008 Erick Gallesio - I3S-CNRS/ESSI <eg@essi.fr>
+# 
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+# USA.
+# 
+#           Author: Erick Gallesio [eg@essi.fr]
+#    Creation date: 18-Mar-2005 14:51 (eg)
+# Last file update:  9-Apr-2008 09:58 (eg)
+#
+
+# ======================================================================
+# Generic Rules 
+# ======================================================================
+DIST=@DIST@
+CFLAGS=@CFLAGS@ `pkg-config --cflags libglade-2.0`
+LDFLAGS=@LDFLAGS@ `pkg-config --libs libglade-2.0` @LIBS@
+VERSION=@VERSION@
+PACKAGE=@PACKAGE@
+HG_URL=@HG_URL@
+
+
+%.@SO@ : %.o
+	@LOAD@ $*.@SO@  $(LDFLAGS) $<
+
+%.o: %.c
+	@COMP@ $(CFLAGS) -c $<
+
+%.ostk: %.stk
+	stklos-compile -o $*.ostk $<
+
+%.ostk: %.scm
+	stklos-compile -o $*.ostk $<
+
+all: objs
+
+clean:  clean-specific
+	rm -rf *~ $(SOBJ) $(OBJ) $(OSTK)
+
+distclean: clean
+	rm -rf autom4te.cache config.* Makefile
+
+version: distclean
+
+dist: version
+
+
+# ======================================================================
+# Specific Rules 
+# ======================================================================
+SOBJ = $(PACKAGE).@SO@
+OBJ  = $(PACKAGE).o
+OSTK = 
+
+objs: $(SOBJ) $(OSTK)
+
+$(PACKAGE).o: $(PACKAGE)-inc.c $(PACKAGE).c
+
+$(PACKAGE)-inc.c: $(PACKAGE).spi $(PACKAGE).stk
+	stklos-compile -c -C -o $(PACKAGE)-inc.c $(PACKAGE).spi
+
+clean-specific:
+	rm -f $(PACKAGE)-inc.c

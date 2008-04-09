@@ -1,0 +1,54 @@
+;;; Test for ScmPkg package stklos-gtk-glade
+;;;
+;;;           Author: Erick Gallesio [eg@essi.fr]
+;;;    Creation date: 05-Aug-2007 23:50 (eg)
+;;; Last file update:  9-Apr-2008 10:21 (eg)
+;;;
+
+
+;; ======================================================================
+;; 	Callbacks ...
+;; ======================================================================
+
+;; Dialog close
+(define (dialog-destroy-cb widget data)
+  (eprintf "Destroying dialog\n")
+  (gtk-main-quit))
+
+;; Button OK 
+(define (ok-clicked-cb widget data)
+  (eprintf "You have clicked the OK button\n")
+  (gtk-main-quit))
+
+;; Button Cancel
+(define (cancel-clicked-cb widget data)
+  (eprintf "You have clicked the Cancel button\n"))
+
+;; ======================================================================
+;; 	Glade GUI ...
+;; ======================================================================
+(define (gtk-gui)
+
+  (define (find-glade-file)
+    (let ((hint "stklos-gtk-glade/test/interface.glade"))
+      (if (file-exists? hint)
+	  ;; We are probably doing a "make test" durring installation
+	  hint
+	  ;; Weird
+	  "./interface.glade")))
+			
+  (gtk-init (void) (void))
+  (let* ((xml    (glade-xml-new (find-glade-file) (void) (void)))
+	 (widget (glade-xml-get-widget xml "dialog1")))
+    (gtk-widget-show-all widget)
+    (glade-xml-signal-autoconnect xml)
+    (gtk-main)))
+
+;; ======================================================================
+;;	run ...
+;; ======================================================================
+(define (run names)
+  (eprintf "DIR ~S\n" (getcwd))
+  (gtk-gui)
+  (eprintf "GTk+ GUI is destroyed.\nBye\n")
+  (exit 0))
