@@ -5,6 +5,16 @@ Documentation for stklos-gtk-glade
 Description
 -----------
 
+Glade home page describes it as "a RAD tool to enable quick & easy
+development of user interfaces for the GTK+ toolkit and the GNOME
+desktop environment, released under the GNU GPL License. The user
+interfaces designed in Glade are saved as XML, and by using the
+libglade library these can be loaded by applications dynamically as
+needed." 
+
+An example using this package is detailed in the 
+http://www.stklos.org/Wiki/GUI/GTkGlade/[STklos Wiki]
+
 
 Package API
 -----------
@@ -15,12 +25,18 @@ glade-xml-new
 (glade-xml-new fname root domain)
 ---------------------------------------------------------
 
+Creates a new GladeXML object (and the corresponding widgets) from the
+XML file fname.
+
+This function returns the newly created GladeXML object, or #void on 
+failure.
+ 
 *Parameters*::
-- *fname*: todo
+- *fname*: the XML file name
 
-- *root*: todo
+- *root*: the widget node in fname to start building from (or #void)
 
-- *domain*: todo
+- *domain*: the translation domain to use for this interface (or #void)
 
 glade-xml-get-widget
 ~~~~~~~~~~~~~~~~~~~~
@@ -29,10 +45,16 @@ glade-xml-get-widget
 (glade-xml-get-widget self name)
 ---------------------------------------------------------
 
-*Parameters*::
-- *self*: todo
+This function is used to get a pointer to the GtkWidget corresponding
+to name in the interface description. You would use this if you have
+to do anything to the widget after loading. 
 
-- *name*: todo
+This function returns the widget matching name, or #void if none exists.
+
+*Parameters*::
+- *self*: the GladeXML object.
+
+- *name*: the name of the widget.
 
 glade-xml-signal-autoconnect
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -41,6 +63,10 @@ glade-xml-signal-autoconnect
 (glade-xml-signal-autoconnect self)
 ---------------------------------------------------------
 
+This function uses introspection to connect the signals with 
+the handlers specified in the Glade tool.
+
 *Parameters*::
-- *self*: todo
+- *self*: the GladeXML object. 
+
 
