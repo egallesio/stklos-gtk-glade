@@ -13,7 +13,7 @@ libglade library these can be loaded by applications dynamically as
 needed." 
 
 An example using this package is detailed in the 
-http://www.stklos.org/Wiki/GUI/GTkGlade/[STklos Wiki]
+http://www.stklos.net/Wiki/GUI/GTkGlade/[STklos Wiki]
 
 
 Package API

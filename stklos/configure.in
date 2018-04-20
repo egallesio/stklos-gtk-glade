@@ -1,7 +1,7 @@
 #
 # configure.in for STklos libglade wrapper
 # 
-# Copyright © 2005-2008 Erick Gallesio - I3S-CNRS/ESSI <eg@essi.fr>
+# Copyright © 2005-2010 Erick Gallesio - I3S-CNRS/ESSI <eg@essi.fr>
 # 
 # 
 # This program is free software; you can redistribute it and/or modify
@@ -21,13 +21,13 @@
 # 
 #           Author: Erick Gallesio [eg@essi.fr]
 #    Creation date: 18-Mar-2005 14:51 (eg)
-# Last file update:  9-Apr-2008 09:57 (eg)
+# Last file update: 23-Aug-2010 09:20 (eg)
 #
 
 
 AC_INIT(src/stklos-gtk-glade.c)
 AC_PREREQ(2.52)
-VERSION=0.1.0
+VERSION=1.0.0
 PACKAGE=stklos-gtk-glade
 
 dnl Checks for programs.
